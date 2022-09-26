@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_index/di/app_module.dart';
 
 void main() {
+  provideDependencies();
   runApp(const MyApp());
 }
 
