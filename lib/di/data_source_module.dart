@@ -2,22 +2,30 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:pokemon_index/data/remote_data_source/pokemon_remote_data_source.dart';
 
+class DataSourceModule {
 
-void provideGraphqlClient(KiwiContainer container) {
-  final HttpLink httpLink = HttpLink("https://graphqlpokemon.favware.tech/");
+  static void configure() {
+    _provideGraphqlClient();
+    _provideDataSource();
+  }
 
-  container.registerSingleton(
-        (container) {
-      return GraphQLClient(
-        cache: GraphQLCache(),
-        link: httpLink,
-      );
-    },
-  );
-}
-void provideDataSource(KiwiContainer container) {
-  container.registerSingleton(
-      (container) => PokemonRemoteDataSource(container.resolve<GraphQLClient>()),
-      name: "remote_data_source"
-  );
+  static void _provideGraphqlClient() {
+    KiwiContainer container = KiwiContainer();
+    final HttpLink httpLink = HttpLink("https://graphqlpokemon.favware.tech/");
+
+    container.registerSingleton(
+          (container) {
+        return GraphQLClient(
+          cache: GraphQLCache(),
+          link: httpLink,
+        );
+      },
+    );
+  }
+  static void _provideDataSource() {
+    KiwiContainer container = KiwiContainer();
+    container.registerSingleton(
+            (container) => PokemonRemoteDataSource(container.resolve<GraphQLClient>()),
+    );
+  }
 }

@@ -19,6 +19,8 @@ class HomeRepository {
     );
 
     return _remoteDataSource.getSpeciesTypes(queryOption)
-        .then((value) => value.parsedData?.data.getAllPokemonSpecies ?? []);
+        .then((value) {
+          return value.parsedData?.getAllPokemonSpecies ?? [];
+    });
   }
 }
