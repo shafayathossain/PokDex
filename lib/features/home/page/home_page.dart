@@ -4,26 +4,47 @@ import 'package:kiwi/kiwi.dart';
 import 'package:pokemon_index/features/home/bloc/home_bloc.dart';
 import 'package:pokemon_index/features/home/bloc/home_event.dart';
 import 'package:pokemon_index/features/home/bloc/home_state.dart';
+import 'package:pokemon_index/features/home/widgets/item_pokemon.dart';
 
 class HomePage extends StatelessWidget {
   final KiwiContainer _kiwiContainer = KiwiContainer();
+  ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => _kiwiContainer.resolve<HomeBloc>(),
-      child: Builder(
-
-        builder: (context) {
-          print("Builder called");
-          context.read<HomeBloc>().add(HomeEvent());
-          return BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              return Container(color: Colors.amberAccent, height: 100, width: 100,);
-            },
-          );
-        },
-      )
-    );
+        create: (_) => _kiwiContainer.resolve<HomeBloc>(),
+        child: Builder(
+          builder: (context) {
+            print("Builder called");
+            context.read<HomeBloc>().add(HomeEvent());
+            return BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state is PokemonSpeciesListState) {
+                  return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      controller: scrollController,
+                      itemCount: state.speciesList.length + 1,
+                      itemBuilder: (context, itemIndex) {
+                        if (itemIndex < state.speciesList.length) {
+                          return ItemPokemon(
+                              pokemon: state.speciesList[itemIndex]);
+                        } else {
+                          context.read<HomeBloc>().add(LoadMoreHomeEvent(
+                                lastShowedId: state.speciesList.last.id,
+                              ));
+                          return const CircularProgressIndicator();
+                        }
+                      });
+                } else {
+                  return Container();
+                }
+              },
+            );
+          },
+        ));
   }
-
 }
