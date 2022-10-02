@@ -1,20 +1,26 @@
+import 'package:pokemon_index/data/model/response/pokemon.dart';
+
 class SpeciesTypesResponse {
 
-  late List<String> getAllPokemonSpecies;
+  late List<Pokemon> pokemons;
 
   SpeciesTypesResponse({
-    required this.getAllPokemonSpecies,
+    required this.pokemons,
   });
 
   SpeciesTypesResponse.fromJson(Map<String, dynamic> json) {
-    getAllPokemonSpecies = json['getAllPokemonSpecies'] != null
-        ? json['getAllPokemonSpecies'].cast<String>()
-        : [];
+    if(json['pokemons'] != null && json['pokemons']["results"] != null) {
+      Iterable result = json['pokemons']["results"];
+      List<Pokemon> tempPokemon = List<Pokemon>.from(result.map((e) => Pokemon.fromJson(e)));
+      pokemons = tempPokemon;
+    } else {
+      pokemons =  List<Pokemon>.empty();
+    }
   }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['getAllPokemonSpecies'] = getAllPokemonSpecies;
+    map['pokemons'] = pokemons;
     return map;
   }
 }

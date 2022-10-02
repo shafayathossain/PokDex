@@ -11,7 +11,7 @@ class DataSourceModule {
 
   static void _provideGraphqlClient() {
     KiwiContainer container = KiwiContainer();
-    final HttpLink httpLink = HttpLink("https://graphqlpokemon.favware.tech/");
+    final HttpLink httpLink = HttpLink("https://graphql-pokeapi.vercel.app/api/graphql");
 
     container.registerSingleton(
           (container) {

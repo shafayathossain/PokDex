@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_index/data/model/response/pokemon.dart';
 import 'package:pokemon_index/data/repository/home_repository.dart';
 import 'package:pokemon_index/features/home/bloc/home_event.dart';
 import 'package:pokemon_index/features/home/bloc/home_state.dart';
@@ -14,7 +15,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future <void> _fetchSpeciesList(HomeEvent event, Emitter<HomeState> emit) async {
-    List<String> speciesList = await _repository.getPokemonSpeciesList();
+    List<Pokemon> speciesList = await _repository.getPokemonSpeciesList();
     emit(PokemonSpeciesListState(speciesList));
   }
 
