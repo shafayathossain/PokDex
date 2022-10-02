@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pokemon_index/di/app_module.dart';
 import 'package:pokemon_index/features/home/page/home_page.dart';
 
@@ -13,6 +14,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return MaterialApp(
       title: 'PokDex',
       theme: ThemeData(
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.latoTextTheme(textTheme)
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );

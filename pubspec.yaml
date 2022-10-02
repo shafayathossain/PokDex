@@ -37,6 +37,7 @@ dependencies:
   kiwi: 4.0.2
   graphql_flutter: 5.1.0
   flutter_bloc: 8.0.0
+  google_fonts: 3.0.1
 
 dev_dependencies:
   flutter_test:
